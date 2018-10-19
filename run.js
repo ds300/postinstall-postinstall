@@ -11,8 +11,6 @@ if (fs.existsSync(packageJsonPath)) {
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath))
 
   if (packageJson.scripts && packageJson.scripts.postinstall) {
-    exec('npm run postinstall', {cwd: appPath})
+    exec('yarn run postinstall', {cwd: appPath})
   }
 }
-
-
