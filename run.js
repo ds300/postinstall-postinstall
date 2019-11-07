@@ -11,6 +11,16 @@ if (fs.existsSync(packageJsonPath)) {
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath))
 
   if (packageJson.scripts && packageJson.scripts.postinstall) {
-    exec('yarn run postinstall', {cwd: appPath})
+    const pkgManager = shouldUseYarn() ? 'yarn' : 'npm';
+    exec(`${pkgManager} run postinstall`, {cwd: appPath})
+  }
+}
+
+function shouldUseYarn() {
+  try {
+    exec('yarnpkg --version', { stdio: 'ignore' });
+    return true;
+  } catch (e) {
+    return false;
   }
 }
